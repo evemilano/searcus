@@ -409,16 +409,6 @@ section[id] {
 .vitals-mid { background-color: var(--accent-ember); }
 .vitals-poor { background-color: #EF4444; }
 
-/* ========== PUBLICATION TIMELINE ========== */
-.pub-bar {
-    transition: fill 0.2s ease, opacity 0.2s ease;
-}
-
-.pub-bar:hover {
-    fill: var(--accent-flare) !important;
-    opacity: 1 !important;
-}
-
 /* ========== CHART FADE-IN ========== */
 .chart-fade-in {
     animation: chart-reveal 0.6s ease-out forwards;

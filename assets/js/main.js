@@ -130,74 +130,26 @@ document.addEventListener('DOMContentLoaded', function () {
         tickerTrack.innerHTML = html + html;
     }
 
-    var RSS_CACHE_KEY = 'searcus_rss_v1';
-    var RSS_CACHE_TTL = 86400000; // 24h
-
-    function getCachedRSS() {
-        try {
-            var c = JSON.parse(localStorage.getItem(RSS_CACHE_KEY));
-            if (c && Date.now() - c.ts < RSS_CACHE_TTL) return c.data;
-        } catch (e) {}
-        return null;
-    }
-
-    function setCachedRSS(data) {
-        try {
-            localStorage.setItem(RSS_CACHE_KEY, JSON.stringify({ ts: Date.now(), data: data }));
-        } catch (e) {}
-    }
-
-    function parseRSSPage(xml) {
-        var parser = new DOMParser();
-        var doc = parser.parseFromString(xml, 'text/xml');
-        var items = doc.querySelectorAll('item');
-        var articles = [];
-        items.forEach(function (item) {
-            articles.push({
-                title: item.querySelector('title').textContent,
-                link: item.querySelector('link').textContent,
-                pubDate: item.querySelector('pubDate') ? item.querySelector('pubDate').textContent : ''
-            });
-        });
-        return articles;
-    }
-
-    function publishRSS(articles) {
-        window.__rssItems = articles;
-        window.dispatchEvent(new CustomEvent('rss-loaded'));
-    }
-
     if (tickerTrack) {
-        var cached = getCachedRSS();
-        if (cached) {
-            buildTicker(cached.slice(0, 10));
-            publishRSS(cached);
-        } else {
-            // Fetch page 1 for ticker, then pages 2-4 in parallel for timeline
-            fetch('https://www.evemilano.com/feed/')
-                .then(function (res) { return res.text(); })
-                .then(function (xml) {
-                    var articles = parseRSSPage(xml);
-                    buildTicker(articles);
-
-                    var pages = [2, 3, 4];
-                    Promise.all(pages.map(function (p) {
-                        return fetch('https://www.evemilano.com/feed/?paged=' + p)
-                            .then(function (res) { return res.ok ? res.text() : ''; })
-                            .then(function (xml) { return xml ? parseRSSPage(xml) : []; })
-                            .catch(function () { return []; });
-                    })).then(function (results) {
-                        results.forEach(function (pageArticles) {
-                            articles = articles.concat(pageArticles);
-                        });
-                        setCachedRSS(articles);
-                        publishRSS(articles);
+        fetch('https://www.evemilano.com/feed/')
+            .then(function (res) { return res.text(); })
+            .then(function (xml) {
+                var parser = new DOMParser();
+                var doc = parser.parseFromString(xml, 'text/xml');
+                var items = doc.querySelectorAll('item');
+                var articles = [];
+                items.forEach(function (item, i) {
+                    if (i >= 10) return;
+                    articles.push({
+                        title: item.querySelector('title').textContent,
+                        link: item.querySelector('link').textContent
                     });
-                })
-                .catch(function () {
-                    if (tickerWrap) tickerWrap.style.display = 'none';
                 });
-        }
+                buildTicker(articles);
+            })
+            .catch(function () {
+                if (tickerWrap) tickerWrap.style.display = 'none';
+            });
     }
 
 });

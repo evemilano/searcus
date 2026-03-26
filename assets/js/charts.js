@@ -26,18 +26,9 @@ document.addEventListener('DOMContentLoaded', function () {
         return COLORS.poor;
     }
 
-    function metricClass(thresholds, value) {
-        if (value <= thresholds.good) return 'vitals-good';
-        if (value <= thresholds.poor) return 'vitals-mid';
-        return 'vitals-poor';
-    }
-
     // ========== CHART 1: PAGESPEED INSIGHTS ==========
     var PSI_CACHE_KEY = 'searcus_psi_v2';
     var PSI_CACHE_TTL = 86400000; // 24h
-
-    // Fallback data (updated periodically with real values)
-    var PSI_FALLBACK = { score: 1.0, lcp: 680, cls: 0, inp: null, fallback: true };
 
     function getCachedPSI() {
         try {
@@ -104,7 +95,6 @@ document.addEventListener('DOMContentLoaded', function () {
     function renderPSI(data) {
         var loading = document.getElementById('psi-loading');
         var results = document.getElementById('psi-results');
-        var error = document.getElementById('psi-error');
         if (!results) return;
 
         if (loading) loading.classList.add('hidden');
@@ -131,15 +121,16 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         var tsEl = document.getElementById('psi-timestamp');
-        if (tsEl) {
-            tsEl.textContent = data.fallback
-                ? 'Dati indicativi — aggiornamento live non disponibile'
-                : 'Analisi live: ' + new Date().toLocaleString();
-        }
+        if (tsEl) tsEl.textContent = 'Analisi live: ' + new Date().toLocaleString();
     }
 
-    function showPSIFallback() {
-        renderPSI(PSI_FALLBACK);
+    function showPSIError() {
+        var loading = document.getElementById('psi-loading');
+        var error = document.getElementById('psi-error');
+        var refreshBtn = document.getElementById('psi-refresh');
+        if (loading) loading.classList.add('hidden');
+        if (error) error.classList.remove('hidden');
+        if (refreshBtn) refreshBtn.disabled = false;
     }
 
     function fetchPSI() {
@@ -167,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .catch(function () {
                 clearTimeout(timeout);
-                showPSIFallback();
+                showPSIError();
             })
             .finally(function () {
                 if (refreshBtn) refreshBtn.disabled = false;
@@ -229,98 +220,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }, opts);
     }
 
-    // ========== CHART 3: PUBLICATION TIMELINE ==========
-    function aggregateByMonth(items) {
-        var months = {};
-        items.forEach(function (item) {
-            if (!item.pubDate) return;
-            var d = new Date(item.pubDate);
-            if (isNaN(d.getTime())) return;
-            var key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
-            months[key] = (months[key] || 0) + 1;
-        });
-
-        var labels = [];
-        var now = new Date();
-        for (var i = 11; i >= 0; i--) {
-            var d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-            var key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
-            var monthName = d.toLocaleDateString('default', { month: 'short' });
-            labels.push({ key: key, count: months[key] || 0, label: monthName });
-        }
-        return labels;
-    }
-
-    function renderTimeline(items) {
-        var container = document.getElementById('pub-timeline');
-        if (!container) return;
-
-        var data = aggregateByMonth(items);
-        var maxCount = Math.max.apply(null, data.map(function (d) { return d.count; }));
-        if (maxCount === 0) maxCount = 1;
-
-        var w = container.clientWidth || 600;
-        var h = container.clientHeight || 200;
-        var pad = { top: 20, bottom: 32, left: 10, right: 10 };
-        var chartW = w - pad.left - pad.right;
-        var chartH = h - pad.top - pad.bottom;
-        var barGap = 6;
-        var barW = Math.max((chartW / data.length) - barGap, 8);
-
-        var svg = '<svg width="100%" height="100%" viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="xMidYMid meet">';
-
-        // Horizontal grid lines
-        for (var g = 0; g <= 3; g++) {
-            var gy = pad.top + chartH - (chartH * g / 3);
-            svg += '<line x1="' + pad.left + '" y1="' + gy + '" x2="' + (w - pad.right) + '" y2="' + gy + '" stroke="' + COLORS.wire + '" stroke-width="0.5" stroke-dasharray="4 4" opacity="0.5"/>';
-        }
-
-        data.forEach(function (d, i) {
-            var x = pad.left + i * (barW + barGap) + barGap / 2;
-            var barH = d.count > 0 ? Math.max((d.count / maxCount) * chartH, 4) : 0;
-            var y = pad.top + chartH - barH;
-
-            if (d.count > 0) {
-                svg += '<rect x="' + x + '" y="' + y + '" width="' + barW + '" height="' + barH + '" rx="3" fill="' + COLORS.signal + '" class="pub-bar" opacity="0.8">' +
-                    '<animate attributeName="height" from="0" to="' + barH + '" dur="0.6s" begin="' + (i * 0.05) + 's" fill="freeze"/>' +
-                    '<animate attributeName="y" from="' + (pad.top + chartH) + '" to="' + y + '" dur="0.6s" begin="' + (i * 0.05) + 's" fill="freeze"/>' +
-                    '</rect>';
-                // Count label on top
-                svg += '<text x="' + (x + barW / 2) + '" y="' + (y - 6) + '" text-anchor="middle" fill="' + COLORS.chalk + '" font-family="JetBrains Mono,monospace" font-size="10" font-weight="500">' + d.count + '</text>';
-            }
-
-            // Month label
-            svg += '<text x="' + (x + barW / 2) + '" y="' + (h - 8) + '" text-anchor="middle" fill="' + COLORS.mist + '" font-family="JetBrains Mono,monospace" font-size="9">' + d.label + '</text>';
-        });
-
-        svg += '</svg>';
-        container.innerHTML = svg;
-    }
-
-    function initTimeline() {
-        if (!document.getElementById('pub-timeline')) return;
-
-        if (window.__rssItems && window.__rssItems.length > 0) {
-            renderTimeline(window.__rssItems);
-        } else {
-            window.addEventListener('rss-loaded', function () {
-                if (window.__rssItems) renderTimeline(window.__rssItems);
-            });
-        }
-    }
-
-    // Redraw timeline on resize for responsiveness
-    var resizeTimer;
-    window.addEventListener('resize', function () {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function () {
-            if (window.__rssItems) renderTimeline(window.__rssItems);
-        }, 250);
-    });
-
     // ========== INIT ==========
     initPSI();
     initVisitorVitals();
-    initTimeline();
 
 });
