@@ -60,8 +60,8 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/assets/css/style.css">
 
-    <!-- Web Vitals + Charts -->
-    <script src="https://unpkg.com/web-vitals@4/dist/web-vitals.iife.js" defer></script>
+    <!-- Web Vitals (loaded early to capture LCP) -->
+    <script src="https://unpkg.com/web-vitals@4/dist/web-vitals.iife.js"></script>
     <script src="/assets/js/charts.js" defer></script>
 </head>
 <body class="bg-void text-chalk font-sans grain">
@@ -311,11 +311,14 @@
 
                 <!-- PSI Card -->
                 <div class="glass rounded-2xl overflow-hidden reveal" id="psi-card">
-                    <div class="terminal-header bg-slate/50">
-                        <span class="terminal-dot bg-red-500/80"></span>
-                        <span class="terminal-dot bg-ember/80"></span>
-                        <span class="terminal-dot bg-verified/80"></span>
-                        <span class="font-mono text-xs text-mist ml-2">pagespeed-insights &mdash; searcus.ch</span>
+                    <div class="terminal-header bg-slate/50 justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="terminal-dot bg-red-500/80"></span>
+                            <span class="terminal-dot bg-ember/80"></span>
+                            <span class="terminal-dot bg-verified/80"></span>
+                            <span class="font-mono text-xs text-mist ml-1">pagespeed-insights &mdash; searcus.ch</span>
+                        </div>
+                        <button id="psi-refresh" class="font-mono text-[10px] text-mist hover:text-signal transition-colors px-2 py-1 rounded border border-wire/50 hover:border-signal/50" title="Rilancia analisi">&#x21bb; refresh</button>
                     </div>
                     <div class="p-6 md:p-8">
                         <div id="psi-loading" class="text-center py-8">

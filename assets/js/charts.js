@@ -33,12 +33,15 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // ========== CHART 1: PAGESPEED INSIGHTS ==========
-    var PSI_CACHE_KEY = 'searcus_psi_v1';
-    var PSI_CACHE_TTL = 300000; // 5 min
+    var PSI_CACHE_KEY = 'searcus_psi_v2';
+    var PSI_CACHE_TTL = 86400000; // 24h
+
+    // Fallback data (updated periodically with real values)
+    var PSI_FALLBACK = { score: 1.0, lcp: 680, cls: 0, inp: null, fallback: true };
 
     function getCachedPSI() {
         try {
-            var c = JSON.parse(sessionStorage.getItem(PSI_CACHE_KEY));
+            var c = JSON.parse(localStorage.getItem(PSI_CACHE_KEY));
             if (c && Date.now() - c.ts < PSI_CACHE_TTL) return c.data;
         } catch (e) {}
         return null;
@@ -46,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function setCachedPSI(data) {
         try {
-            sessionStorage.setItem(PSI_CACHE_KEY, JSON.stringify({ ts: Date.now(), data: data }));
+            localStorage.setItem(PSI_CACHE_KEY, JSON.stringify({ ts: Date.now(), data: data }));
         } catch (e) {}
     }
 
@@ -128,29 +131,30 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         var tsEl = document.getElementById('psi-timestamp');
-        if (tsEl) tsEl.textContent = 'Analisi: ' + new Date().toLocaleString();
-    }
-
-    function showPSIError() {
-        var loading = document.getElementById('psi-loading');
-        var error = document.getElementById('psi-error');
-        if (loading) loading.classList.add('hidden');
-        if (error) error.classList.remove('hidden');
-    }
-
-    function initPSI() {
-        if (!document.getElementById('psi-card')) return;
-
-        var cached = getCachedPSI();
-        if (cached) {
-            renderPSI(cached);
-            return;
+        if (tsEl) {
+            tsEl.textContent = data.fallback
+                ? 'Dati indicativi — aggiornamento live non disponibile'
+                : 'Analisi live: ' + new Date().toLocaleString();
         }
+    }
+
+    function showPSIFallback() {
+        renderPSI(PSI_FALLBACK);
+    }
+
+    function fetchPSI() {
+        // Show loading state
+        var loading = document.getElementById('psi-loading');
+        var results = document.getElementById('psi-results');
+        var refreshBtn = document.getElementById('psi-refresh');
+        if (loading) loading.classList.remove('hidden');
+        if (results) { results.classList.add('hidden'); results.classList.remove('chart-fade-in'); }
+        if (refreshBtn) refreshBtn.disabled = true;
 
         var controller = new AbortController();
         var timeout = setTimeout(function () { controller.abort(); }, 30000);
 
-        fetch('https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=https%3A%2F%2Fsearcus.ch%2Fit%2F&strategy=mobile&category=PERFORMANCE', { signal: controller.signal })
+        fetch('https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=https%3A%2F%2Fsearcus.ch%2Fit%2F&strategy=mobile&category=PERFORMANCE&key=AIzaSyCer7ZAf_1fChZ996-E04C73-vOQhgjZNs', { signal: controller.signal })
             .then(function (res) {
                 clearTimeout(timeout);
                 if (!res.ok) throw new Error('PSI ' + res.status);
@@ -163,8 +167,32 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .catch(function () {
                 clearTimeout(timeout);
-                showPSIError();
+                showPSIFallback();
+            })
+            .finally(function () {
+                if (refreshBtn) refreshBtn.disabled = false;
             });
+    }
+
+    function initPSI() {
+        if (!document.getElementById('psi-card')) return;
+
+        // Bind refresh button
+        var refreshBtn = document.getElementById('psi-refresh');
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', function () {
+                localStorage.removeItem(PSI_CACHE_KEY);
+                fetchPSI();
+            });
+        }
+
+        var cached = getCachedPSI();
+        if (cached) {
+            renderPSI(cached);
+            return;
+        }
+
+        fetchPSI();
     }
 
     // ========== CHART 2: VISITOR WEB VITALS ==========
@@ -186,17 +214,19 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!document.getElementById('visitor-vitals-card')) return;
         if (typeof webVitals === 'undefined') return;
 
+        var opts = { reportAllChanges: true };
+
         webVitals.onLCP(function (metric) {
             setVitalBar('rv-lcp', metric.value, CWV.LCP);
-        });
+        }, opts);
 
         webVitals.onCLS(function (metric) {
             setVitalBar('rv-cls', metric.value, CWV.CLS);
-        });
+        }, opts);
 
         webVitals.onINP(function (metric) {
             setVitalBar('rv-inp', metric.value, CWV.INP);
-        });
+        }, opts);
     }
 
     // ========== CHART 3: PUBLICATION TIMELINE ==========
