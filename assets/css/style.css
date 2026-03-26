@@ -1,0 +1,442 @@
+/* Searcus Swiss SAGL — 2027 Cutting-Edge UI */
+
+/* ========== CUSTOM PROPERTIES ========== */
+:root {
+    --bg-void: #0A0A0F;
+    --bg-obsidian: #111117;
+    --bg-slate: #1A1A24;
+    --border-wire: #2A2A3A;
+    --text-chalk: #E8E6F0;
+    --text-mist: #9896A8;
+    --accent-signal: #6366F1;
+    --accent-flare: #818CF8;
+    --accent-ember: #F59E0B;
+    --accent-verified: #10B981;
+    --accent-cyan: #06B6D4;
+    --accent-violet: #8B5CF6;
+}
+
+/* ========== BASE ========== */
+html {
+    scroll-behavior: smooth;
+}
+
+section[id] {
+    scroll-margin-top: 80px;
+}
+
+/* ========== NOISE / GRAIN OVERLAY ========== */
+.grain::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* ========== AURORA MESH GRADIENT ========== */
+.aurora-bg {
+    background:
+        radial-gradient(ellipse 80% 50% at 20% 40%, rgba(99, 102, 241, 0.15), transparent),
+        radial-gradient(ellipse 60% 40% at 75% 20%, rgba(6, 182, 212, 0.10), transparent),
+        radial-gradient(ellipse 50% 60% at 50% 80%, rgba(139, 92, 246, 0.12), transparent),
+        var(--bg-void);
+    animation: aurora-drift 60s ease-in-out infinite alternate;
+}
+
+@keyframes aurora-drift {
+    0% {
+        background-position: 0% 0%, 100% 0%, 50% 100%;
+    }
+    33% {
+        background-position: 30% 20%, 70% 40%, 20% 60%;
+    }
+    66% {
+        background-position: 60% 40%, 30% 60%, 80% 30%;
+    }
+    100% {
+        background-position: 100% 100%, 0% 100%, 50% 0%;
+    }
+}
+
+/* ========== GLASSMORPHISM ========== */
+.glass {
+    background: rgba(17, 17, 23, 0.7);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--border-wire);
+}
+
+.glass-solid {
+    background: rgba(17, 17, 23, 0.92);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--border-wire);
+}
+
+/* ========== NAVBAR SMART HIDE ========== */
+.navbar-hidden {
+    transform: translateY(-100%);
+}
+
+#navbar {
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                background-color 0.3s ease;
+}
+
+/* ========== CARD GLOW ON HOVER ========== */
+.card-glow {
+    transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.card-glow:hover {
+    box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.3),
+                0 8px 40px rgba(99, 102, 241, 0.08);
+    border-color: rgba(99, 102, 241, 0.3);
+    transform: translateY(-2px);
+}
+
+/* ========== DOT GRID PATTERN ========== */
+.dot-grid {
+    background-image: radial-gradient(circle, var(--border-wire) 1px, transparent 1px);
+    background-size: 24px 24px;
+}
+
+/* ========== TYPEWRITER ANIMATION ========== */
+.terminal-line {
+    white-space: nowrap;
+    clip-path: inset(0 100% 0 0);
+    animation: typing 2s steps(40, end) forwards;
+}
+
+.terminal-cursor::after {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 1.1em;
+    background: var(--accent-signal);
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    animation: blink-cursor 0.8s step-end infinite;
+}
+
+.terminal-line:nth-child(2) { animation-delay: 2.2s; }
+.terminal-line:nth-child(3) { animation-delay: 4.4s; }
+.terminal-line:nth-child(4) { animation-delay: 6.6s; }
+.terminal-line:nth-child(5) { animation-delay: 8.8s; }
+.terminal-line:nth-child(6) { animation-delay: 11s; }
+.terminal-line:nth-child(7) { animation-delay: 13.2s; }
+.terminal-line:nth-child(8) { animation-delay: 15.4s; }
+
+@keyframes typing {
+    from { clip-path: inset(0 100% 0 0); }
+    to { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes blink-cursor {
+    50% { opacity: 0; }
+}
+
+/* ========== MARQUEE ========== */
+.marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee-scroll 40s linear infinite;
+}
+
+.marquee-track-reverse {
+    display: flex;
+    width: max-content;
+    animation: marquee-scroll-reverse 35s linear infinite;
+}
+
+.marquee-wrapper:hover .marquee-track,
+.marquee-wrapper:hover .marquee-track-reverse {
+    animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+@keyframes marquee-scroll-reverse {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+}
+
+/* ========== SCROLL REVEAL ========== */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger children */
+.reveal-stagger > .reveal:nth-child(1) { transition-delay: 0ms; }
+.reveal-stagger > .reveal:nth-child(2) { transition-delay: 100ms; }
+.reveal-stagger > .reveal:nth-child(3) { transition-delay: 200ms; }
+.reveal-stagger > .reveal:nth-child(4) { transition-delay: 300ms; }
+.reveal-stagger > .reveal:nth-child(5) { transition-delay: 400ms; }
+
+/* CSS scroll-driven animations (progressive enhancement) */
+@supports (animation-timeline: view()) {
+    .reveal-scroll {
+        animation: reveal-up linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 100%;
+    }
+    @keyframes reveal-up {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+}
+
+/* ========== CTA BUTTON GLOW ========== */
+.btn-glow {
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.btn-glow:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.3),
+                0 0 60px rgba(99, 102, 241, 0.1);
+}
+
+/* ========== GHOST BUTTON ========== */
+.btn-ghost {
+    transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-ghost:hover {
+    border-color: var(--accent-signal);
+    color: var(--accent-flare);
+}
+
+/* ========== LINK UNDERLINE ANIMATION ========== */
+.link-animated {
+    position: relative;
+    text-decoration: none;
+}
+
+.link-animated::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    background: var(--accent-signal);
+    transition: width 0.3s ease, left 0.3s ease;
+}
+
+.link-animated:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+/* ========== COUNTER ANIMATION ========== */
+.counter-value {
+    font-variant-numeric: tabular-nums;
+}
+
+/* ========== TERMINAL WINDOW ========== */
+.terminal-window {
+    border: 1px solid var(--border-wire);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.terminal-header {
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--border-wire);
+}
+
+.terminal-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+/* ========== PILL TAG ========== */
+.pill-tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 6px;
+    font-size: 0.6875rem;
+    line-height: 1.6;
+}
+
+/* ========== SCROLL INDICATOR ========== */
+.scroll-indicator {
+    animation: scroll-bounce 2s ease-in-out infinite;
+}
+
+@keyframes scroll-bounce {
+    0%, 100% { transform: translateY(0); opacity: 0.4; }
+    50% { transform: translateY(8px); opacity: 0.8; }
+}
+
+/* ========== MOBILE FULL-SCREEN MENU ========== */
+.mobile-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.mobile-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ========== REDUCED MOTION ========== */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    .marquee-track,
+    .marquee-track-reverse {
+        animation: none !important;
+    }
+    .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
+
+/* ========== CONTENT VISIBILITY (PERFORMANCE) ========== */
+.cv-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 500px;
+}
+
+/* ========== SEGMENTED CONTROL (LANG TOGGLE) ========== */
+.lang-toggle {
+    display: inline-flex;
+    border: 1px solid var(--border-wire);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.lang-toggle a {
+    padding: 4px 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.lang-toggle a.active {
+    background: rgba(99, 102, 241, 0.2);
+    color: var(--text-chalk);
+}
+
+/* ========== JSON SYNTAX HIGHLIGHTING ========== */
+.json-key { color: var(--accent-signal); }
+.json-string { color: var(--accent-verified); }
+.json-number { color: var(--accent-ember); }
+.json-bracket { color: var(--text-mist); }
+.json-null { color: var(--accent-verified); }
+
+/* ========== RSS TICKER ========== */
+.rss-ticker {
+    overflow: hidden;
+    border-top: 1px solid var(--border-wire);
+    border-bottom: 1px solid var(--border-wire);
+    background: var(--bg-obsidian);
+}
+
+.rss-ticker-track {
+    display: flex;
+    width: max-content;
+    animation: ticker-scroll 60s linear infinite;
+}
+
+.rss-ticker:hover .rss-ticker-track {
+    animation-play-state: paused;
+}
+
+@keyframes ticker-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+.rss-ticker-item {
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 24px;
+    color: var(--text-mist);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.rss-ticker-item:hover {
+    color: var(--accent-flare);
+}
+
+.rss-ticker-sep {
+    color: var(--accent-signal);
+    opacity: 0.5;
+}
+
+/* ========== PSI GAUGE ========== */
+.psi-gauge-arc {
+    stroke-dashoffset: inherit;
+}
+
+/* ========== VITALS BARS ========== */
+.vitals-good { background-color: var(--accent-verified); }
+.vitals-mid { background-color: var(--accent-ember); }
+.vitals-poor { background-color: #EF4444; }
+
+/* ========== PUBLICATION TIMELINE ========== */
+.pub-bar {
+    transition: fill 0.2s ease, opacity 0.2s ease;
+}
+
+.pub-bar:hover {
+    fill: var(--accent-flare) !important;
+    opacity: 1 !important;
+}
+
+/* ========== CHART FADE-IN ========== */
+.chart-fade-in {
+    animation: chart-reveal 0.6s ease-out forwards;
+}
+
+@keyframes chart-reveal {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========== PSI LOADING DOTS ========== */
+@keyframes psi-dots {
+    0%, 20% { content: '.'; }
+    40% { content: '..'; }
+    60%, 100% { content: '...'; }
+}
+
+.psi-dots::after {
+    content: '...';
+    animation: psi-dots 1.5s steps(1) infinite;
+}

@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Searcus Swiss SAGL — Technical SEO, International SEO &amp; PPC Consulting, Lugano</title>
+    <meta name="description" content="Searcus Swiss SAGL: technical SEO and PPC consulting agency in Lugano. Crawling, rendering, indexing, log analysis, Core Web Vitals, international SEO, Google Ads &amp; Reddit Ads. Since 2010. Google Partner.">
+
+    <!-- Hreflang -->
+    <link rel="alternate" hreflang="it" href="https://searcus.ch/it/">
+    <link rel="alternate" hreflang="en" href="https://searcus.ch/en/">
+    <link rel="alternate" hreflang="x-default" href="https://searcus.ch/it/">
+    <link rel="canonical" href="https://searcus.ch/en/">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Searcus Swiss SAGL — Technical SEO, International SEO &amp; PPC Consulting">
+    <meta property="og:description" content="Technical SEO and PPC consulting agency in Lugano. Crawling, rendering, indexing, international SEO, Google Ads &amp; Reddit Ads. Since 2010.">
+    <meta property="og:url" content="https://searcus.ch/en/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="it_CH">
+    <meta property="og:site_name" content="Searcus Swiss SAGL">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%236366F1'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-family='system-ui,sans-serif' font-weight='700' font-size='22' fill='%23fff'%3ES%3C/text%3E%3C/svg%3E">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    void: '#0A0A0F',
+                    obsidian: '#111117',
+                    slate: '#1A1A24',
+                    wire: '#2A2A3A',
+                    chalk: '#E8E6F0',
+                    mist: '#9896A8',
+                    signal: '#6366F1',
+                    flare: '#818CF8',
+                    ember: '#F59E0B',
+                    verified: '#10B981',
+                },
+                fontFamily: {
+                    sans: ['Inter', 'system-ui', 'sans-serif'],
+                    display: ['Space Grotesk', 'sans-serif'],
+                    mono: ['JetBrains Mono', 'monospace'],
+                },
+            }
+        }
+    }
+    </script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+
+    <!-- Web Vitals + Charts -->
+    <script src="https://unpkg.com/web-vitals@4/dist/web-vitals.iife.js" defer></script>
+    <script src="/assets/js/charts.js" defer></script>
+</head>
+<body class="bg-void text-chalk font-sans grain">
+
+    <!-- ========== NAVBAR ========== -->
+    <nav id="navbar" class="fixed top-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-5xl glass rounded-full z-50 px-4 md:px-6 py-3">
+        <div class="flex items-center justify-between">
+            <a href="/en/" class="font-display text-lg font-semibold tracking-widest text-chalk uppercase">Searcus</a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#services" class="text-sm text-mist hover:text-chalk link-animated transition-colors">Services</a>
+                <a href="#clients" class="text-sm text-mist hover:text-chalk link-animated transition-colors">Clients</a>
+                <a href="#about" class="text-sm text-mist hover:text-chalk link-animated transition-colors">About</a>
+                <a href="#contact" class="text-sm text-mist hover:text-chalk link-animated transition-colors">Contact</a>
+                <div class="lang-toggle">
+                    <a href="/it/" class="text-mist hover:text-chalk">IT</a>
+                    <a href="/en/" class="active text-chalk">EN</a>
+                </div>
+                <a href="#contact" class="text-sm font-medium px-5 py-2 rounded-full bg-gradient-to-r from-signal to-flare text-white btn-glow">Let's talk</a>
+            </div>
+            <!-- Mobile menu button -->
+            <button id="menu-toggle" class="md:hidden p-2 text-mist hover:text-chalk" aria-label="Menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ========== MOBILE OVERLAY ========== -->
+    <div id="mobile-overlay" class="mobile-overlay glass-solid md:hidden">
+        <div class="flex flex-col items-center justify-center h-full gap-8">
+            <button id="menu-close" class="absolute top-6 right-6 p-2 text-mist hover:text-chalk" aria-label="Close menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+            <a href="#services" class="text-2xl font-display font-medium text-chalk hover:text-signal transition-colors">Services</a>
+            <a href="#clients" class="text-2xl font-display font-medium text-chalk hover:text-signal transition-colors">Clients</a>
+            <a href="#about" class="text-2xl font-display font-medium text-chalk hover:text-signal transition-colors">About</a>
+            <a href="#contact" class="text-2xl font-display font-medium text-chalk hover:text-signal transition-colors">Contact</a>
+            <div class="lang-toggle mt-4">
+                <a href="/it/" class="text-mist hover:text-chalk">IT</a>
+                <a href="/en/" class="active text-chalk">EN</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== HERO ========== -->
+    <section class="aurora-bg min-h-svh flex flex-col items-center justify-center px-4 pt-16 md:pt-4 relative">
+        <div class="max-w-4xl mx-auto text-center">
+            <!-- Monospace label -->
+            <p class="font-mono text-xs md:text-sm tracking-widest text-ember mb-8">// since 2010 &mdash; Lugano, Switzerland</p>
+
+            <!-- Main heading -->
+            <h1 class="font-display text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] mb-6 tracking-tight">
+                We reverse-engineer how <span class="text-signal" style="text-shadow: 0 0 40px rgba(99,102,241,0.3)">Google</span> sees your site.
+            </h1>
+
+            <!-- Subtitle -->
+            <p class="text-lg md:text-xl text-mist mb-10 max-w-2xl mx-auto leading-relaxed">
+                Technical SEO &amp; PPC consulting for enterprises.<br>
+                <span class="font-mono font-medium text-verified">Zero penalties. Ever.</span>
+            </p>
+
+            <!-- Terminal -->
+            <div class="terminal-window bg-obsidian max-w-xl mx-auto mb-10 text-left">
+                <div class="terminal-header bg-slate/50">
+                    <span class="terminal-dot bg-red-500/60"></span>
+                    <span class="terminal-dot bg-yellow-500/60"></span>
+                    <span class="terminal-dot bg-green-500/60"></span>
+                    <span class="ml-3 text-xs font-mono text-mist">terminal</span>
+                </div>
+                <div class="p-3 md:p-5 font-mono text-[11px] md:text-sm space-y-1">
+                    <div class="terminal-line"><span class="text-mist">$</span> <span class="text-chalk">screaming-frog --crawl searcus.ch</span></div>
+                    <div class="terminal-line text-verified">&gt; 0 blocked resources, 0 indexing errors</div>
+                    <div class="terminal-line"><span class="text-mist">$</span> <span class="text-chalk">lighthouse --preset=perf searcus.ch</span></div>
+                    <div class="terminal-line text-verified">&gt; Perf: 100 | A11y: 100 | SEO: 100</div>
+                    <div class="terminal-line"><span class="text-mist">$</span> <span class="text-chalk">python3 gsc_api.py --clicks --last 90d</span></div>
+                    <div class="terminal-line text-ember">&gt; +34% organic clicks QoQ</div>
+                    <div class="terminal-line"><span class="text-mist">$</span> <span class="text-chalk">python3 llm_classify.py --model claude</span></div>
+                    <div class="terminal-line text-verified terminal-cursor">&gt; 12k queries classified — intent mapping OK</div>
+                </div>
+            </div>
+
+            <!-- CTAs -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#contact" class="inline-block bg-gradient-to-r from-signal to-flare text-white font-medium px-8 py-3.5 rounded-full btn-glow">
+                    Start a project
+                </a>
+                <a href="https://www.evemilano.com/blog/" target="_blank" rel="noopener" class="inline-block text-chalk font-medium px-8 py-3.5 rounded-full border border-wire btn-ghost">
+                    Read our research &rarr;
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-indicator">
+            <svg class="w-5 h-5 text-mist/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- ========== CREDIBILITY BAR ========== -->
+    <section class="bg-obsidian border-y border-wire py-5 px-4 overflow-x-auto cv-auto">
+        <div class="max-w-6xl mx-auto flex items-center justify-center gap-4 md:gap-10 font-mono text-xs md:text-sm whitespace-nowrap">
+            <span class="text-mist">Google Partner</span>
+            <span class="text-wire">|</span>
+            <span class="text-mist">SISTRIX Partner since 2018</span>
+            <span class="text-wire">|</span>
+            <span class="text-ember">Since 2010</span>
+            <span class="text-wire">|</span>
+            <span class="text-verified">Zero Google penalties</span>
+            <span class="text-wire hidden sm:inline">|</span>
+            <span class="text-mist hidden sm:inline">5 European countries</span>
+        </div>
+    </section>
+
+    <!-- ========== SERVICES — BENTO GRID ========== -->
+    <section id="services" class="py-20 md:py-28 px-4 bg-void cv-auto">
+        <div class="max-w-6xl mx-auto">
+            <p class="font-mono text-xs tracking-widest text-signal mb-4 reveal">// services</p>
+            <h2 class="font-display text-3xl md:text-4xl font-bold mb-14 reveal">What we do</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 reveal-stagger">
+                <!-- Technical SEO — large card -->
+                <div class="lg:col-span-2 bg-obsidian border border-wire rounded-2xl p-8 md:p-10 card-glow relative overflow-hidden reveal">
+                    <div class="dot-grid absolute inset-0 opacity-30 pointer-events-none"></div>
+                    <div class="relative">
+                        <span class="font-mono text-xs text-signal mb-4 block">&lt;technical-seo /&gt;</span>
+                        <h3 class="font-sans text-xl md:text-2xl font-semibold mb-4 text-chalk">Technical SEO</h3>
+                        <p class="text-mist leading-relaxed mb-6 max-w-xl">
+                            Deep-dive audits on crawling, rendering, and indexing. Log file analysis, Core Web Vitals optimization, structured data, JavaScript SEO, and site migrations. We work directly with your dev team.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="pill-tag bg-slate text-mist">crawling</span>
+                            <span class="pill-tag bg-slate text-mist">rendering</span>
+                            <span class="pill-tag bg-slate text-mist">indexing</span>
+                            <span class="pill-tag bg-slate text-mist">log analysis</span>
+                            <span class="pill-tag bg-slate text-mist">CWV</span>
+                            <span class="pill-tag bg-slate text-mist">JS SEO</span>
+                            <span class="pill-tag bg-slate text-mist">migrations</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- International SEO -->
+                <div class="bg-obsidian border border-wire rounded-2xl p-8 card-glow reveal">
+                    <span class="font-mono text-xs text-signal mb-4 block">&lt;international-seo /&gt;</span>
+                    <h3 class="font-sans text-xl font-semibold mb-4 text-chalk">International SEO</h3>
+                    <p class="text-mist leading-relaxed mb-6">
+                        Hreflang architecture, ccTLD/subfolder/subdomain strategy, geo-targeting, multilingual keyword research, and localized content strategies.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="pill-tag bg-slate text-mist">hreflang</span>
+                        <span class="pill-tag bg-slate text-mist">geo-targeting</span>
+                        <span class="pill-tag bg-slate text-mist">multilingual</span>
+                    </div>
+                </div>
+
+                <!-- PPC -->
+                <div class="bg-obsidian border border-wire rounded-2xl p-8 card-glow reveal">
+                    <span class="font-mono text-xs text-signal mb-4 block">&lt;ppc-advertising /&gt;</span>
+                    <h3 class="font-sans text-xl font-semibold mb-4 text-chalk">PPC Advertising</h3>
+                    <p class="text-mist leading-relaxed mb-6">
+                        Google Ads (Search, Shopping, Display, YouTube, Performance Max) and Reddit Ads. Conversion tracking, feed optimization, advanced bidding.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="pill-tag bg-slate text-mist">Google Ads</span>
+                        <span class="pill-tag bg-slate text-mist">Reddit Ads</span>
+                        <span class="pill-tag bg-slate text-mist">PMax</span>
+                    </div>
+                </div>
+
+                <!-- Training -->
+                <div class="bg-obsidian border border-wire rounded-2xl p-8 card-glow reveal">
+                    <span class="font-mono text-xs text-signal mb-4 block">&lt;training /&gt;</span>
+                    <h3 class="font-sans text-xl font-semibold mb-4 text-chalk">Professional Training</h3>
+                    <p class="text-mist leading-relaxed mb-6">
+                        Technical SEO, Google Ads, GSC, and analytics courses. Private or corporate workshops, fundamentals to advanced. On-site or remote.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="pill-tag bg-slate text-mist">SEO courses</span>
+                        <span class="pill-tag bg-slate text-mist">Ads courses</span>
+                        <span class="pill-tag bg-slate text-mist">workshops</span>
+                    </div>
+                </div>
+
+                <!-- SEO Manager -->
+                <div class="bg-obsidian border border-wire rounded-2xl p-8 card-glow reveal">
+                    <span class="font-mono text-xs text-signal mb-4 block">&lt;seo-manager /&gt;</span>
+                    <h3 class="font-sans text-xl font-semibold mb-4 text-chalk">SEO Manager</h3>
+                    <p class="text-mist leading-relaxed mb-6">
+                        Strategic orchestration of digital visibility for enterprises. Monthly calls, data-driven initiatives, team coordination with your copywriters and developers.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="pill-tag bg-slate text-mist">enterprise</span>
+                        <span class="pill-tag bg-slate text-mist">strategy</span>
+                        <span class="pill-tag bg-slate text-mist">coordination</span>
+                    </div>
+                </div>
+
+                <!-- SEO Competitive Intelligence — full-width card -->
+                <div class="lg:col-span-3 bg-obsidian border border-wire rounded-2xl p-8 md:p-10 card-glow relative overflow-hidden reveal">
+                    <div class="dot-grid absolute inset-0 opacity-30 pointer-events-none"></div>
+                    <div class="relative md:flex md:gap-12 md:items-start">
+                        <div class="md:flex-1">
+                            <span class="font-mono text-xs text-signal mb-4 block">&lt;competitor-intelligence /&gt;</span>
+                            <h3 class="font-sans text-xl md:text-2xl font-semibold mb-4 text-chalk">SEO Competitive Intelligence</h3>
+                            <p class="text-mist leading-relaxed mb-6 max-w-3xl">
+                                Systematic SEO competitor analysis that maps the full competitive landscape at signal level. We dissect competitor keyword portfolios, reverse-engineer their site architecture via crawl comparison, model SERP share across priority query clusters, and audit backlink gap differentials. The output is actionable competitive intelligence for SEO: a ranked opportunity matrix that quantifies where your competitors are outranking you, why, and the exact interventions needed to close the gap — from content structure to authority acquisition.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="pill-tag bg-slate text-mist">keyword gap analysis</span>
+                                <span class="pill-tag bg-slate text-mist">SERP share modelling</span>
+                                <span class="pill-tag bg-slate text-mist">backlink gap</span>
+                                <span class="pill-tag bg-slate text-mist">crawl comparison</span>
+                                <span class="pill-tag bg-slate text-mist">competitor seo audit</span>
+                                <span class="pill-tag bg-slate text-mist">competition analysis</span>
+                                <span class="pill-tag bg-slate text-mist">opportunity matrix</span>
+                            </div>
+                        </div>
+                        <div class="hidden md:block mt-8 md:mt-0 md:w-56 lg:w-64 shrink-0">
+                            <div class="bg-slate border border-wire rounded-xl p-5 font-mono text-xs leading-relaxed text-mist">
+                                <p class="text-signal mb-3">// competitor delta</p>
+                                <p><span class="text-chalk">domain_gap</span>: <span class="text-verified">+2,340 kw</span></p>
+                                <p><span class="text-chalk">authority_delta</span>: <span class="text-ember">−18 DR</span></p>
+                                <p><span class="text-chalk">serp_overlap</span>: <span class="text-chalk">34%</span></p>
+                                <p><span class="text-chalk">quick_wins</span>: <span class="text-signal">47 URLs</span></p>
+                                <p class="mt-3 text-wire">→ generating roadmap...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== METRICS ========== -->
+    <section class="py-20 md:py-28 px-4 bg-void border-y border-wire cv-auto">
+        <div class="max-w-5xl mx-auto">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 text-center">
+                <div class="reveal">
+                    <p class="font-display text-5xl md:text-6xl font-extrabold text-chalk counter-value" data-counter-dynamic="2010" data-suffix="+">0</p>
+                    <p class="text-mist text-sm mt-2 font-mono">years of practice</p>
+                </div>
+                <div class="reveal">
+                    <p class="font-display text-5xl md:text-6xl font-extrabold text-chalk counter-value" data-counter="500" data-suffix="+">0</p>
+                    <p class="text-mist text-sm mt-2 font-mono">sites audited</p>
+                </div>
+                <div class="reveal">
+                    <p class="font-display text-5xl md:text-6xl font-extrabold text-verified counter-value" data-counter="0" data-suffix="">0</p>
+                    <p class="text-mist text-sm mt-2 font-mono">Google penalties. Ever.</p>
+                </div>
+                <div class="reveal">
+                    <p class="font-display text-5xl md:text-6xl font-extrabold text-chalk counter-value" data-counter="5" data-suffix="">0</p>
+                    <p class="text-mist text-sm mt-2 font-mono">European countries</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CLIENTS — MARQUEE ========== -->
+    <section id="clients" class="py-20 md:py-28 px-4 bg-obsidian cv-auto">
+        <div class="max-w-6xl mx-auto">
+            <p class="font-mono text-xs tracking-widest text-signal mb-4 reveal">// trusted by</p>
+            <h2 class="font-display text-3xl md:text-4xl font-bold mb-14 reveal">Enterprise clients</h2>
+        </div>
+
+        <div class="marquee-wrapper overflow-hidden mb-6">
+            <div class="marquee-track">
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Bayer</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Wolters Kluwer</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Ermenegildo Zegna</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">W&uuml;rth</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">EFG Bank</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">BSI Bank</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Wyndham Hotels</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Moleskine</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">IBSA Swiss</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">We Are Social</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Lacertosus</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Consulcesi</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Farmy.ch</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">TryHackMe</span>
+                <!-- Duplicate for seamless loop -->
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Bayer</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Wolters Kluwer</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Ermenegildo Zegna</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">W&uuml;rth</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">EFG Bank</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">BSI Bank</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Wyndham Hotels</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Moleskine</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">IBSA Swiss</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">We Are Social</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Lacertosus</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Consulcesi</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Farmy.ch</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">TryHackMe</span>
+            </div>
+        </div>
+
+        <div class="marquee-wrapper overflow-hidden mb-10">
+            <div class="marquee-track-reverse">
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Engineering</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">La Martina</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">TIM WCAP</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">The Bridge Firenze</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Tigros</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Tinext</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">HG Pooled Mgmt</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Angel Aligner</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Aqseptence Group</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Freedome</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">QuotidianoSanit&agrave;</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Micuro</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">iDoctors</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">InSella</span>
+                <!-- Duplicate for seamless loop -->
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Engineering</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">La Martina</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">TIM WCAP</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">The Bridge Firenze</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Tigros</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Tinext</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">HG Pooled Mgmt</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Angel Aligner</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Aqseptence Group</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Freedome</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">QuotidianoSanit&agrave;</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">Micuro</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">iDoctors</span>
+                <span class="font-display text-2xl md:text-3xl font-medium text-mist/30 hover:text-chalk transition-colors duration-300 mx-8 md:mx-12 whitespace-nowrap">InSella</span>
+            </div>
+        </div>
+
+        <p class="text-center text-mist italic text-sm reveal">Institutional websites, editorial platforms, and international e-commerce</p>
+    </section>
+
+    <!-- ========== ABOUT / FOUNDER ========== -->
+    <section id="about" class="py-20 md:py-28 px-4 bg-void cv-auto">
+        <div class="max-w-6xl mx-auto">
+            <p class="font-mono text-xs tracking-widest text-signal mb-4 reveal">// about</p>
+            <h2 class="font-display text-3xl md:text-4xl font-bold mb-14 reveal">A technical team. Since 2010.<br>No compromises.</h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-start">
+                <!-- Text column -->
+                <div class="text-mist text-lg leading-relaxed space-y-5 reveal">
+                    <p>
+                        <strong class="text-chalk">Searcus Swiss</strong> was founded in 2010 by Giovanni Sacheli. We are a small, vertical team of senior technical consultants. The approach is direct: work at the source code level, speak the language of developers, deliver analysis that engineering teams can actually execute.
+                    </p>
+                    <p>
+                        The team behind <a href="https://www.evemilano.com" target="_blank" rel="noopener" class="text-signal hover:text-flare link-animated">evemilano.com</a> &mdash; one of Italy's most referenced Technical SEO resources.
+                    </p>
+                    <p>
+                        Certified <strong class="text-chalk">Google Partner</strong> and <strong class="text-chalk">SISTRIX Partner</strong> since 2018. Clients across Switzerland, Italy, Denmark, the UK, and the rest of Europe. Since 2010, zero Google penalties across all managed projects.
+                    </p>
+                    <img src="../assets/images/searcus-team_544.png" alt="The Searcus Swiss team" class="mt-4 rounded border border-wire/30 w-full" srcset="../assets/images/searcus-team_544.png 544w, ../assets/images/searcus-team.png 1024w" sizes="(max-width: 1024px) 100vw, 544px" loading="lazy">
+                </div>
+
+                <!-- Terminal JSON column -->
+                <div class="terminal-window bg-obsidian reveal">
+                    <div class="terminal-header bg-slate/50">
+                        <span class="terminal-dot bg-red-500/60"></span>
+                        <span class="terminal-dot bg-yellow-500/60"></span>
+                        <span class="terminal-dot bg-green-500/60"></span>
+                        <span class="ml-3 text-xs font-mono text-mist">profile.json</span>
+                    </div>
+                    <pre class="p-5 md:p-6 font-mono text-sm leading-relaxed overflow-x-auto"><span class="json-bracket">{</span>
+  <span class="json-key">"founder"</span>: <span class="json-string">"Giovanni Sacheli"</span>,
+  <span class="json-key">"team"</span>: <span class="json-bracket">[</span>
+    <span class="json-string">"Giovanni Sacheli"</span>,
+    <span class="json-string">"Jacopo Ranzani"</span>,
+    <span class="json-string">"Davide Berardinelli"</span>
+  <span class="json-bracket">]</span>,
+  <span class="json-key">"company"</span>: <span class="json-string">"Searcus Swiss SAGL"</span>,
+  <span class="json-key">"since"</span>: <span class="json-number">2010</span>,
+  <span class="json-key">"stack"</span>: <span class="json-bracket">[</span>
+    <span class="json-string">"screaming-frog"</span>,
+    <span class="json-string">"sitebulb"</span>,
+    <span class="json-string">"gsc-api-python"</span>,
+    <span class="json-string">"server-log-analysis"</span>,
+    <span class="json-string">"chrome-devtools"</span>,
+    <span class="json-string">"lighthouse-ci"</span>,
+    <span class="json-string">"sistrix"</span>,
+    <span class="json-string">"custom-crawlers"</span>,
+    <span class="json-string">"python-dev"</span>,
+    <span class="json-string">"ai-automation"</span>
+  <span class="json-bracket">]</span>,
+  <span class="json-key">"penalties"</span>: <span class="json-number">0</span>,
+  <span class="json-key">"markets"</span>: <span class="json-bracket">[</span><span class="json-string">"CH"</span>, <span class="json-string">"IT"</span>, <span class="json-string">"DK"</span>, <span class="json-string">"UK"</span>, <span class="json-string">"EU"</span><span class="json-bracket">]</span>
+<span class="json-bracket">}</span></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CONTACT ========== -->
+    <section id="contact" class="py-20 md:py-28 px-4 bg-obsidian border-t border-wire cv-auto">
+        <div class="max-w-5xl mx-auto">
+            <p class="font-mono text-xs tracking-widest text-signal mb-4 reveal">// let's talk</p>
+            <h2 class="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-14 reveal">Ready to fix what<br>Google can't see?</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
+                <!-- Contact info -->
+                <div class="space-y-6 reveal">
+                    <a href="mailto:giovanni@searcus.ch" class="text-signal text-xl md:text-2xl font-medium link-animated hover:text-flare block">giovanni@searcus.ch</a>
+                    <a href="tel:+41798643035" class="text-mist text-lg hover:text-chalk transition-colors block">+41 (0)79 864 30 35</a>
+                    <div class="text-mist leading-relaxed">
+                        <p class="font-semibold text-chalk mb-1">Searcus Swiss SAGL</p>
+                        <p>Via dei Faggi 4V, Pazzallo</p>
+                        <p>6912 Lugano, Switzerland</p>
+                    </div>
+                    <div class="pt-4">
+                        <a href="mailto:giovanni@searcus.ch?subject=New%20project%20inquiry" class="inline-block bg-gradient-to-r from-signal to-flare text-white font-medium px-8 py-3.5 rounded-full btn-glow">
+                            Start a project
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Coordinates / tech detail -->
+                <div class="flex items-start md:items-end justify-start md:justify-end reveal">
+                    <div class="font-mono text-sm text-mist/50 leading-loose">
+                        <p>46.0037&deg;N, 8.9511&deg;E</p>
+                        <p>Lugano, Canton Ticino</p>
+                        <p>UID: CHE-180.818.315</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== RSS TICKER ========== -->
+    <div class="rss-ticker py-3" id="rss-ticker">
+        <div class="rss-ticker-track font-mono text-xs" id="rss-ticker-track">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="bg-void border-t border-wire pt-16 pb-8 px-4">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+            <!-- Col 1: Brand -->
+            <div>
+                <p class="font-display text-xl font-bold tracking-widest text-chalk uppercase mb-3">Searcus</p>
+                <p class="text-sm text-mist leading-relaxed mb-4">
+                    Technical SEO and PPC consulting agency founded in 2010 in Lugano, Switzerland. The team behind <a href="https://www.evemilano.com" target="_blank" rel="noopener" class="text-signal hover:text-flare transition-colors">evemilano.com</a>.
+                </p>
+                <div class="flex items-center gap-4 mt-6">
+                    <a href="https://www.linkedin.com/in/giovannisacheli/" target="_blank" rel="noopener" aria-label="LinkedIn" class="text-mist hover:text-chalk transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                    <a href="https://github.com/evemilano" target="_blank" rel="noopener" aria-label="GitHub" class="text-mist hover:text-chalk transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                    </a>
+                    <a href="https://x.com/EVEMilano" target="_blank" rel="noopener" aria-label="X/Twitter" class="text-mist hover:text-chalk transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </a>
+                    <a href="https://www.youtube.com/@EvemilanoSEO" target="_blank" rel="noopener" aria-label="YouTube" class="text-mist hover:text-chalk transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <!-- Col 2: Services -->
+            <div>
+                <p class="text-chalk font-semibold mb-4">Services</p>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#services" class="text-mist hover:text-chalk transition-colors">Technical SEO</a></li>
+                    <li><a href="#services" class="text-mist hover:text-chalk transition-colors">International SEO</a></li>
+                    <li><a href="#services" class="text-mist hover:text-chalk transition-colors">Google Ads</a></li>
+                    <li><a href="#services" class="text-mist hover:text-chalk transition-colors">Reddit Ads</a></li>
+                    <li><a href="#services" class="text-mist hover:text-chalk transition-colors">Professional Training</a></li>
+                    <li><a href="#services" class="text-mist hover:text-chalk transition-colors">SEO Manager</a></li>
+                </ul>
+            </div>
+            <!-- Col 3: Resources -->
+            <div>
+                <p class="text-chalk font-semibold mb-4">Resources</p>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="https://www.evemilano.com" target="_blank" rel="noopener" class="text-mist hover:text-chalk transition-colors">Blog evemilano.com</a></li>
+                    <li><a href="https://seodata.app" target="_blank" rel="noopener" class="text-mist hover:text-chalk transition-colors">SEOdata.app</a></li>
+                    <li><a href="https://www.sistrix.com" target="_blank" rel="noopener" class="text-mist hover:text-chalk transition-colors">SISTRIX Partner</a></li>
+                </ul>
+            </div>
+            <!-- Col 4: Contact -->
+            <div>
+                <p class="text-chalk font-semibold mb-4">Contact</p>
+                <ul class="space-y-2 text-sm text-mist">
+                    <li>Searcus Swiss SAGL</li>
+                    <li>Via dei Faggi 4V, Pazzallo</li>
+                    <li>6912 Lugano, Switzerland</li>
+                    <li class="pt-2"><a href="tel:+41798643035" class="hover:text-chalk transition-colors">+41 (0)79 864 30 35</a></li>
+                    <li><a href="mailto:giovanni@searcus.ch" class="hover:text-chalk transition-colors">giovanni@searcus.ch</a></li>
+                </ul>
+                <p class="text-xs text-mist/50 mt-4 font-mono">UID: CHE-180.818.315</p>
+            </div>
+        </div>
+        <!-- Bottom bar -->
+        <div class="max-w-6xl mx-auto pt-8 border-t border-wire flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-mist">
+            <p>&copy; 2010&ndash;<span id="current-year">2026</span> Searcus Swiss SAGL. All rights reserved.</p>
+            <p class="font-mono">Google Partner &middot; SISTRIX Partner</p>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="/assets/js/main.js"></script>
+</body>
+</html>
