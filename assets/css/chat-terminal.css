@@ -1,0 +1,271 @@
+/* ============================================================
+   Searcus — Chat Terminal styles (plug-and-play, removable)
+   Estende .terminal-window esistente. Namespace .chat-*
+   e .terminal-static-line per nuove righe senza typewriter CSS.
+   ============================================================ */
+
+/* Nuove righe terminale (senza animation: typing) */
+.terminal-static-line {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: 1.55;
+    color: var(--text-chalk);
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin-top: 2px;
+}
+
+/* Body terminale scrollable una volta attivata la chat */
+.terminal-scrollable {
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-wire) transparent;
+    scroll-behavior: smooth;
+}
+.terminal-scrollable::-webkit-scrollbar {
+    width: 6px;
+}
+.terminal-scrollable::-webkit-scrollbar-track {
+    background: transparent;
+}
+.terminal-scrollable::-webkit-scrollbar-thumb {
+    background: var(--border-wire);
+    border-radius: 3px;
+}
+.terminal-scrollable::-webkit-scrollbar-thumb:hover {
+    background: var(--text-mist);
+}
+
+/* Welcome message */
+.chat-welcome {
+    color: var(--accent-signal);
+    margin-top: 10px;
+}
+.chat-welcome > span:last-child {
+    color: var(--accent-flare);
+}
+
+/* Messaggio utente (echo del comando) */
+.chat-msg-user {
+    margin-top: 10px;
+}
+
+/* Messaggio bot */
+.chat-msg-bot {
+    color: var(--text-chalk);
+}
+.chat-msg-bot strong {
+    color: var(--accent-flare);
+    font-weight: 600;
+}
+.chat-msg-bot code {
+    background: var(--bg-slate);
+    color: var(--accent-cyan);
+    padding: 0 5px;
+    border-radius: 3px;
+    font-family: inherit;
+    font-size: 0.95em;
+}
+
+/* Reply bot con markdown renderizzato da marked.js: il contenuto è un blocco
+   inline-block che contiene <p>, <ul>, <li>, <a>, <strong>, <code>. */
+.chat-msg-bot-md {
+    display: flex;
+    gap: 0;
+    align-items: flex-start;
+}
+.chat-bot-prompt {
+    flex-shrink: 0;
+    line-height: 1.55;
+    margin-right: 0.5em;
+}
+.chat-bot-content {
+    flex: 1;
+    min-width: 0;
+    display: block;
+}
+.chat-bot-content > *:first-child { margin-top: 0; }
+.chat-bot-content > *:last-child  { margin-bottom: 0; }
+.chat-bot-content p {
+    margin: 0 0 0.6em 0;
+    line-height: 1.55;
+}
+.chat-bot-content p:last-child { margin-bottom: 0; }
+.chat-bot-content ul,
+.chat-bot-content ol {
+    margin: 0.3em 0 0.6em 0;
+    padding-left: 1.4em;
+}
+.chat-bot-content li {
+    margin: 0.15em 0;
+    line-height: 1.5;
+}
+.chat-bot-content li::marker {
+    color: var(--text-mist);
+}
+.chat-bot-content h1,
+.chat-bot-content h2,
+.chat-bot-content h3,
+.chat-bot-content h4 {
+    margin: 0.5em 0 0.3em 0;
+    color: var(--accent-flare);
+    font-weight: 600;
+    font-size: 1em;
+}
+.chat-bot-content a {
+    color: var(--accent-cyan);
+    text-decoration: underline dotted;
+    text-underline-offset: 3px;
+    word-break: break-word;
+}
+.chat-bot-content a:hover {
+    color: var(--accent-flare);
+    text-decoration-style: solid;
+}
+.chat-bot-content strong {
+    color: var(--accent-flare);
+    font-weight: 600;
+}
+.chat-bot-content em {
+    color: var(--text-chalk);
+    font-style: italic;
+}
+.chat-bot-content code {
+    background: var(--bg-slate);
+    color: var(--accent-cyan);
+    padding: 0 5px;
+    border-radius: 3px;
+    font-family: inherit;
+    font-size: 0.95em;
+}
+.chat-bot-content pre {
+    background: var(--bg-slate);
+    border: 1px solid var(--border-wire);
+    border-radius: 6px;
+    padding: 8px 10px;
+    margin: 0.5em 0;
+    overflow-x: auto;
+}
+.chat-bot-content pre code {
+    background: transparent;
+    padding: 0;
+    color: var(--text-chalk);
+}
+.chat-bot-content blockquote {
+    border-left: 2px solid var(--border-wire);
+    padding-left: 10px;
+    margin: 0.4em 0;
+    color: var(--text-mist);
+}
+
+/* Errori */
+.chat-msg-error {
+    margin-top: 4px;
+}
+
+/* ─── Thinking indicator ─── */
+.chat-thinking {
+    color: var(--text-mist);
+    white-space: nowrap;
+}
+.chat-thinking > span:last-child {
+    white-space: nowrap;
+}
+.chat-thinking > span:last-child::after {
+    content: '';
+    display: inline-block;
+    width: 1.6em;
+    min-width: 1.6em;
+    text-align: left;
+    white-space: nowrap;
+    animation: chat-dots 1.2s steps(4, end) infinite;
+}
+
+@keyframes chat-dots {
+    0%   { content: ''; }
+    25%  { content: '.'; }
+    50%  { content: '..'; }
+    75%  { content: '...'; }
+    100% { content: ''; }
+}
+
+/* Fallback per browser senza @keyframes content (rari): mostra statico */
+@supports not (animation-name: chat-dots) {
+    .chat-thinking > span:last-child::after {
+        content: '...';
+        animation: none;
+    }
+}
+
+/* ─── Source links ─── */
+.chat-sources-header {
+    color: var(--text-mist);
+    margin-top: 10px;
+    font-size: 0.92em;
+}
+
+.chat-source-line {
+    font-size: 0.92em;
+    padding-left: 2px;
+}
+
+.chat-source-link {
+    color: var(--accent-cyan);
+    text-decoration: underline dotted;
+    text-underline-offset: 3px;
+    transition: color 0.15s ease;
+}
+.chat-source-link:hover {
+    color: var(--accent-flare);
+    text-decoration-style: solid;
+}
+
+/* ─── Input row ─── */
+.chat-input-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-top: 8px;
+    cursor: text;
+}
+
+.chat-input-prompt {
+    flex-shrink: 0;
+}
+
+.chat-input {
+    flex: 1;
+    min-width: 0;
+    background: transparent;
+    border: 0;
+    outline: 0;
+    padding: 0;
+    margin: 0;
+    color: var(--text-chalk);
+    font: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    caret-color: var(--accent-signal);
+}
+
+.chat-input::placeholder {
+    color: var(--text-mist);
+    opacity: 0.55;
+    font-style: italic;
+}
+
+.chat-input:focus {
+    outline: none;
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+    .chat-thinking > span:last-child::after {
+        animation: none;
+        content: '...';
+    }
+    .terminal-scrollable {
+        scroll-behavior: auto;
+    }
+}
