@@ -11,6 +11,7 @@ Static website for **Searcus Swiss SAGL**, an SEO and Google Ads consulting agen
 - **No build system** — plain HTML/CSS/JS served as static files. No bundler, no package manager, no compilation step.
 - **Tailwind CSS via CDN** (`cdn.tailwindcss.com`) — utility classes applied directly in HTML. No local Tailwind config or build.
 - **Custom CSS** in `assets/css/style.css` — full design system (~400 lines) built on CSS custom properties (dark palette: `--bg-void`, `--bg-obsidian`, `--bg-slate`; accent colors: signal, flare, ember, verified, cyan, violet). Includes: aurora mesh gradient animation (hero background), glassmorphism panels (`backdrop-filter`), smart navbar hide/show transition, card glow hover effects, dot grid pattern, typewriter animation (clip-path + steps), bidirectional marquee, scroll reveal with stagger delays + CSS `animation-timeline: view()` progressive enhancement, CTA button glow + ghost button styles, animated link underlines, terminal window chrome, JSON syntax highlighting, RSS ticker, segmented language toggle, `prefers-reduced-motion` safeguards, and `content-visibility: auto` for performance.
+- **Custom cursor** in `assets/css/cursor.css` + `assets/js/cursor.js` — plug-and-play tech cursor effect ("Terminal Reticle + Glow Spotlight"). Two elements injected by JS: a `.cursor-dot` (8×8 caret-style block with `mix-blend-mode: difference`, follows pointer 1:1) and a `.cursor-ring` (36×36 crosshair with lerp trailing at 0.22). Uses `@property --cursor-hue` for smooth color transitions, `translate3d` for GPU compositing, `contain: layout style paint`. Hover on `a, button, [role="button"], input, textarea, [data-cursor]` morphs ring to 56×56 rounded square + dot to blinking cyan caret. Click pulses ring to scale(0.82). Auto-disabled on `(pointer: coarse)` / `(hover: none)` and respects `prefers-reduced-motion`. Fully self-contained: delete the two tags from both `index.html` files to remove completely.
 - **JS** in `assets/js/main.js` — six features (~170 lines): (1) mobile menu open/close with body scroll lock, (2) smart navbar that hides on scroll-down and reappears on scroll-up, (3) scroll-reveal via `IntersectionObserver` with fallback, (4) animated counters with cubic ease-out (supports `data-counter-dynamic` for computed values like years since founding), (5) dynamic copyright year, (6) RSS ticker fetching from `evemilano.com/feed/` with hardcoded fallback articles.
 
 ## Multilingual Setup
@@ -51,3 +52,13 @@ python3 -m http.server 8000
 # or
 npx serve .
 ```
+
+## Production Hosting (nginx)
+
+The site is served in production by nginx from this same directory (`root /home/giovanni/www/searcus.ch`). The vhost lives at `/etc/nginx/sites-available/searcus.ch`. Because the git repo, Claude config, and internal docs all live inside the document root, the vhost includes explicit rules that return `404` (not 403, so scrapers can't even confirm existence) for anything that isn't meant to be public:
+
+- `location ~ /\.` — blocks any path containing a dotfile/dot-directory segment. Covers `.git/`, `.claude/`, `.env`, `.gitignore`, and any future hidden file.
+- `location ~* ^/(CLAUDE\.md|tailwind\.config\.js)$` — blocks these two root-level project files (case-insensitive, anchored so it never matches files under `assets/`).
+- `location ^~ /backup/` — blocks the entire `backup/` directory (internal markdown content, pricing, client list).
+
+**When adding new non-public files to the repo root**, extend the relevant `location` block in the nginx vhost and reload with `sudo nginx -t && sudo systemctl reload nginx`. Anything publicly servable (new top-level HTML, new asset folder, etc.) does NOT need changes — the default `location /` with `try_files` still handles it.

@@ -1,0 +1,169 @@
+/* ============================================================
+   Searcus — Custom Tech Cursor (plug-and-play, removable)
+   Terminal Reticle + Glow Spotlight
+   Dipende solo da --accent-signal / --accent-cyan / --accent-flare
+   definite in assets/css/style.css
+   ============================================================ */
+
+/* Proprietà registrata per transizioni fluide del colore */
+@property --cursor-hue {
+    syntax: '<color>';
+    inherits: false;
+    initial-value: #6366F1;
+}
+
+/* Nascondi cursore nativo solo su desktop con puntatore fine */
+@media (hover: hover) and (pointer: fine) {
+    html,
+    html * {
+        cursor: none !important;
+    }
+}
+
+/* ---------- DOT (caret terminale, segue 1:1) ---------- */
+.cursor-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    background: var(--accent-signal);
+    border-radius: 1px;
+    pointer-events: none;
+    z-index: 10000;
+    mix-blend-mode: difference;
+    transform: translate3d(var(--cursor-x, -100px), var(--cursor-y, -100px), 0) translate(-50%, -50%);
+    transition:
+        width 180ms cubic-bezier(0.4, 0, 0.2, 1),
+        height 180ms cubic-bezier(0.4, 0, 0.2, 1),
+        border-radius 180ms cubic-bezier(0.4, 0, 0.2, 1),
+        background-color 220ms ease;
+    will-change: transform, width, height;
+    contain: layout style paint;
+}
+
+/* ---------- RING (reticolo crosshair, lerp trailing) ---------- */
+.cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--cursor-hue);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    box-shadow:
+        0 0 0 1px rgba(99, 102, 241, 0.08),
+        0 0 24px -4px var(--cursor-hue),
+        inset 0 0 8px -2px var(--cursor-hue);
+    transform: translate3d(var(--cursor-ring-x, -100px), var(--cursor-ring-y, -100px), 0) translate(-50%, -50%) scale(1);
+    transition:
+        width 260ms cubic-bezier(0.34, 1.56, 0.64, 1),
+        height 260ms cubic-bezier(0.34, 1.56, 0.64, 1),
+        border-color 260ms ease,
+        --cursor-hue 260ms ease,
+        border-radius 260ms ease,
+        box-shadow 260ms ease,
+        opacity 200ms ease;
+    will-change: transform, width, height, --cursor-hue;
+    contain: layout style paint;
+}
+
+/* Crosshair interno via pseudo-elementi (linee orizzontale + verticale) */
+.cursor-ring::before,
+.cursor-ring::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: var(--cursor-hue);
+    transition: all 260ms ease;
+    opacity: 0.7;
+}
+
+.cursor-ring::before {
+    /* linea orizzontale */
+    width: 6px;
+    height: 1px;
+    transform: translate(-50%, -50%);
+}
+
+.cursor-ring::after {
+    /* linea verticale */
+    width: 1px;
+    height: 6px;
+    transform: translate(-50%, -50%);
+}
+
+/* ---------- STATO HOVER (su elementi interattivi) ---------- */
+.cursor-dot.is-hover {
+    width: 2px;
+    height: 20px;
+    border-radius: 0;
+    background: var(--accent-cyan);
+    animation: cursor-caret-blink 900ms steps(2, start) infinite;
+}
+
+@keyframes cursor-caret-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+.cursor-ring.is-hover {
+    --cursor-hue: #06B6D4;
+    width: 56px;
+    height: 56px;
+    border-radius: 8px;
+    border-width: 1px;
+    box-shadow:
+        0 0 0 1px rgba(6, 182, 212, 0.15),
+        0 0 32px -2px var(--cursor-hue),
+        inset 0 0 12px -2px var(--cursor-hue);
+}
+
+.cursor-ring.is-hover::before {
+    width: 10px;
+}
+
+.cursor-ring.is-hover::after {
+    height: 10px;
+}
+
+/* ---------- STATO CLICK ---------- */
+.cursor-ring.is-click {
+    transform: translate3d(var(--cursor-ring-x, -100px), var(--cursor-ring-y, -100px), 0) translate(-50%, -50%) scale(0.82);
+    --cursor-hue: #818CF8;
+    transition:
+        transform 120ms cubic-bezier(0.4, 0, 0.2, 1),
+        --cursor-hue 120ms ease;
+}
+
+/* ---------- FUORI VIEWPORT ---------- */
+.cursor-dot.is-hidden,
+.cursor-ring.is-hidden {
+    opacity: 0;
+}
+
+/* ---------- DISABLE SU TOUCH ---------- */
+@media (pointer: coarse), (hover: none) {
+    .cursor-dot,
+    .cursor-ring {
+        display: none !important;
+    }
+    html,
+    html * {
+        cursor: auto !important;
+    }
+}
+
+/* ---------- REDUCED MOTION ---------- */
+@media (prefers-reduced-motion: reduce) {
+    .cursor-ring {
+        display: none !important;
+    }
+    .cursor-dot {
+        transition: none !important;
+        animation: none !important;
+    }
+}

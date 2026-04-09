@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "WebFetch(domain:www.evemilano.com)",
-      "Bash(find /home/giovanni/www/searcus.ch -type f \\\\\\(-name *.png -o -name *.jpg -o -name *.jpeg -o -name *.svg -o -name *.ico -o -name *.webp -o -name *.gif -o -name *.woff -o -name *.woff2 -o -name *.ttf -o -name *.eot \\\\\\))"
+      "Bash(find /home/giovanni/www/searcus.ch -type f \\\\\\(-name *.png -o -name *.jpg -o -name *.jpeg -o -name *.svg -o -name *.ico -o -name *.webp -o -name *.gif -o -name *.woff -o -name *.woff2 -o -name *.ttf -o -name *.eot \\\\\\))",
+      "Read(//etc/nginx/sites-enabled/**)"
     ]
   }
 }
